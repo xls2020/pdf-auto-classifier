@@ -1,0 +1,23 @@
+matching:
+  threshold: 1                  # 文档匹配阈值
+  vector_method: "tfidf"        # 文本向量化方法: "tfidf" 或 "bert"
+  clustering_method: "kmeans"   # 聚类方法: "kmeans" 或 "hierarchical"
+  num_clusters: 10              # 目标聚类数
+  max_clusters: 10              # KMeans 最大聚类数
+  n_clusters: 20                # 手动设置聚类数目
+  top_n_keywords: 10
+  topic_n_keywords: 6 
+  visualize: false              # 是否显示聚类可视化
+
+preprocessing:
+  remove_stopwords: true        # 是否去除停用词
+  lowercase: true               # 是否转换为小写
+  stemming: false               # 是否进行词干提取
+
+nltk:
+  nltk_path: "F:/zotero_root/nltk_data"  # NLTK 数据路径
+  nltk_download: false                  # 是否自动下载 NLTK 需要的资源
+
+input_output:
+  input_dir: "F:/zotero_root/raw_pdfs"  # 输入 PDF 文件夹
+  output_dir: "data/classified"         # 输出分类结果文件夹

@@ -1,0 +1,60 @@
+卷 files 的文件夹 PATH 列表
+卷序列号为 5ED4-55BB
+F:.
+|   README.md
+|   requirements.txt
+|   
++---config
+|       config.yml
+|       taxonomy.yml
+|       zotero_config.yml
+|       
++---data
+|   +---classified
+|   \---logs
+|       |   problematic_documents.txt
+|       |   problematic_documents_analysis.md
+|       |   report.json
+|       |   
+|       \---preprocessed
+|               documents.json
+|               metadata_list.json
+|               vectors.npy
+|               
++---src
+|   |   clustering.py
+|   |   extract_pdf.py
+|   |   keyword_extractor.py
+|   |   keyword_validator.py
+|   |   lda_topic_extractor.py
+|   |   main.py
+|   |   pdf_processor.py
+|   |   semantic.py
+|   |   text_cleaner.py
+|   |   vectorizer.py
+|   |   zotero_uploader.py
+|   |   __init__.py
+|   |   
+|   +---temp
+|   |       clustering1.py
+|   |       clustering2.py
+|   |       main2.py
+|   |       main3.py
+|   |       pdf_processor1.py
+|   |       pdf_processor2.py
+|   |       text_cleaner2.py
+|   |       
+|   \---__pycache__
+|           clustering.cpython-39.pyc
+|           keyword_extractor.cpython-39.pyc
+|           keyword_validator.cpython-39.pyc
+|           lda_topic_extractor.cpython-39.pyc
+|           pdf_processor.cpython-39.pyc
+|           text_cleaner.cpython-39.pyc
+|           vectorizer.cpython-39.pyc
+|           
+\---temp
+        分类后的 PDF 自动上传到 Zotero.md
+        自动生成requirements_txt.md
+        自动生成合适的目录名称.md
+        
