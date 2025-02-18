@@ -1,6 +1,6 @@
-# PDF Auto Classifier & Zotero Uploader
+# PDF Auto Classifier 
 
-本项目实现了从 PDF 自动分类到自动上传至 Zotero 的完整流程。系统主要功能包括：
+本项目实现了PDF 自动分类的完整流程。系统主要功能包括：
 
 - **PDF 解析**：利用 [pdfplumber](https://github.com/jsvine/pdfplumber) 提取 PDF 文件的文本和元数据。
 - **关键词抽取**：通过简单的词频统计（可扩展 TF-IDF、TextRank、RAKE 等方法）自动抽取文档关键词。
@@ -11,7 +11,6 @@
 - **文件移动与报告生成**
   - 根据生成的目录名称，将每个 PDF 文件复制到对应目录下，并生成 JSON 格式的处理报告；
   - 同时保存预处理数据（文本、元数据、向量），便于后续单独使用。
-- **Zotero 上传**：利用 [pyzotero](https://pyzotero.readthedocs.io/) 将自动分类后的 PDF 上传至 Zotero，并根据分类目录生成标签。
 
 ## 目录结构
 
@@ -20,7 +19,6 @@ pdf_auto_classifier/
 ├── config/                    
 │   ├── config.yml                # 系统配置（阈值、向量化方法、聚类方法、预处理设置、NLTK 资源路径等）
 │   ├── taxonomy.yml              # 可选：静态分类树配置（若需要人工干预时使用）
-│   └── zotero_config.yml         # Zotero 配置（包含 library_id、api_key、library_type 等）
 ├── data/
 │   ├── classified/               # 自动分类后输出的 PDF 文件目录
 │   └── logs/                     # 日志和报告文件目录 
@@ -35,7 +33,6 @@ pdf_auto_classifier/
     ├── clustering.py             # 文档聚类模块（支持 KMeans 与层次聚类两种方法）
     ├── keyword_validator.py      # 关键词有效性检测模块（利用 NLTK 词库判断关键词是否有意义）
     ├── semantic.py               # 语义分析模块（示例中提供余弦相似度计算）
-    └── zotero_uploader.py        # 上传模块（将分类后的 PDF 自动上传至 Zotero 并打上标签）
 ```
 
 
@@ -53,8 +50,7 @@ flowchart TD
     G --> H["Generate Classified Directory Structure<br>and JSON Report"]
     H --> I[Traverse Classified Directory]
     I --> J[Extract Tags from Directory Structure]
-    J --> K["Upload PDF to Zotero<br>(zotero_uploader & pyzotero)"]
-    K --> L[End]
+    J --> L[End]
 ```
 
 ## 安装步骤
@@ -107,11 +103,10 @@ input_output:
 
 除了系统配置，还可以配置：
 - **静态分类树**（可选）：编辑 `config/taxonomy.yml` 以提供预定义的分类结构。
-- **Zotero 配置**：编辑 `config/zotero_config.yml` 填写您的 Zotero 相关信息，例如 `library_id`、`api_key` 和 `library_type`。
 
 ## 使用方法
 
-### 1. PDF 自动分类
+### PDF 自动分类
 
 将待分类的 PDF 文件放入指定目录（例如 `F:\zotero_root\raw_pdfs`），然后运行主程序进行自动分类：
 
@@ -129,20 +124,6 @@ python src/main.py --input "F:\zotero_root\raw_pdfs" --output "data/classified" 
 - 保存预处理数据（文本、元数据、向量）到 `data/logs/preprocessed` 目录；
 - 统一在 main 函数中根据 config.yml 设置 NLTK 资源路径及是否下载所需的 NLTK 数据（例如 `words` 与 `stopwords`），避免各模块重复下载。
 
-### 2. 上传分类后的 PDF 到 Zotero
-
-自动分类完成后，运行以下命令将 PDF 文件上传到 Zotero，并自动打上标签（标签根据目录结构生成，例如 `cluster_2` 等）：
-
-```bash
-python src/zotero_uploader.py --config config/zotero_config.yml --input data/classified
-```
-
-该命令将：
-
-- 遍历 `data/classified` 下的所有 PDF 文件；
-- 根据文件所在目录生成标签；
-- 利用 Zotero API 上传 PDF 文件，并为每个文件打上相应标签。
-
 ## 依赖
 
 - Python 3.x
@@ -153,7 +134,6 @@ python src/zotero_uploader.py --config config/zotero_config.yml --input data/cla
 - [numpy](https://numpy.org/)
 - [nltk](https://www.nltk.org/)
 - [sentence-transformers](https://www.sbert.net/)
-- [pyzotero](https://pyzotero.readthedocs.io/)
 
 请确保按照 `requirements.txt` 安装所有依赖。
 
@@ -163,4 +143,4 @@ python src/zotero_uploader.py --config config/zotero_config.yml --input data/cla
 
 ## 致谢
 
-感谢所有开源项目的开发者们，特别是 pdfplumber、SentenceTransformers、pyzotero 和 scikit-learn 的开发团队，为本项目提供了关键技术支持。
+感谢所有开源项目的开发者们，特别是 pdfplumber、SentenceTransformers和 scikit-learn 的开发团队，为本项目提供了关键技术支持。
